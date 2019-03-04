@@ -57,22 +57,24 @@ from PIL import Image
 
 classifier.fit_generator(
     training_set,
-    steps_per_epoch = 30, # was 8000, shortening for laptop
-    epochs = 10,
+    steps_per_epoch = 3, # was 8000, shortening for laptop
+    epochs = 2,
     validation_data = test_set,
-    validation_steps = 30 # was 800
+    validation_steps = 1 # was 800
 )
 
 import numpy as  np
 from keras.preprocessing import image
-test_image = image.load_img('Carbon Board.jpg', target_size = (64, 64))
+test_image = image.load_img('keycapdata/test_set/pulse/t01.jpg', target_size = (64, 64))
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = classifier.predict(test_image)
-training_set.class_indicies
+# print(training_set.class_indicies)
+
+print("result:", result)
 if result[0][0] >= 0.5:
-    prediction = 'carbon'
+    prediction = '\nMy best guess is GMK Carbon\n'
 else:
-    prediction = 'pulse'
+    prediction = '\nMy best guess is SA Pulse\n'
 
 print(prediction)
