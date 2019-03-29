@@ -41,7 +41,7 @@ classifier.add(Flatten())
 classifier.add(Dense(64))
 classifier.add(Activation('relu'))
 classifier.add(Dropout(0.5))
-classifier.add(Dense(1))
+classifier.add(Dense(3))
 classifier.add(Activation('sigmoid'))
 
 # compiling the CNN
@@ -52,7 +52,7 @@ classifier.add(Activation('sigmoid'))
 # 'to_categorical'
 # from keras.utils import to_categorical
 # categorical_labels = to_categorical(int_labels, num_classes = None)
-classifier.compile(loss = 'binary_crossentropy', optimizer = 'rmsprop', metrics = ['accuracy'])
+classifier.compile(loss = 'categorical_crossentropy', optimizer = 'rmsprop', metrics = ['accuracy'])
 
 batch_size = 16
 
@@ -70,14 +70,15 @@ training_set = train_datagen.flow_from_directory(
     'keycapdata/training_set',
     target_size = (150, 150),
     batch_size = batch_size,
-    class_mode = 'binary' # categorical with more than 2 types
+    # class_mode = 'binary' # categorical with more than 2 types
+    # default mode is 'categorical' so if commented out, using more than 2 labels
 )
 
 validation_set = test_datagen.flow_from_directory(
     'keycapdata/test_set',
     target_size = (150, 150),
     batch_size = batch_size,
-    class_mode = 'binary'
+    # class_mode = 'binary'
 )
 
 classifier.fit_generator(
