@@ -10,3 +10,5 @@ Currently, the TF doesn't interact with the app and are two separate pieces, but
 Please set up a python venv with python 3.7.1 or greater, as this project has dependencies that require python 3.7.x.
 
 To set up the venv for this, us the command `virtualenv --no-site-packages --distribute .env && source .env/bin/activate && pip install -r requirements.txt`
+
+I highly recommend using this [github repository](https://github.com/lakshayg/tensorflow-build) for installing a version of tensorflow compiled with your specific CPU to utilize the AVX, AVX2, etc. This will utilize the large-instruction-size caches and increase efficiency and speed of convolution, dot-product, and more.
