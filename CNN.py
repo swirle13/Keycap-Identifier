@@ -51,7 +51,7 @@ classifier.add(Flatten()) # converts 3D feature maps to 1D feature vectors
 classifier.add(Dense(64))
 classifier.add(Activation('relu'))
 classifier.add(Dropout(0.5))
-classifier.add(Dense(3))
+classifier.add(Dense(5))
 classifier.add(Activation('softmax')) # previously sigmoid
 
 # compiling the CNN
@@ -63,11 +63,12 @@ classifier.add(Activation('softmax')) # previously sigmoid
 # from keras.utils import to_categorical
 # categorical_labels = to_categorical(int_labels, num_classes = None)
 
-# was using optimizer = 'rmsprop' but am currently testing SGD to prevent
-# a bouncing back and forth of
-classifier.compile(loss = 'categorical_crossentropy', optimizer = 'Nadam', metrics = ['accuracy'])
+# was using optimizer 'rmsprop' but am currently testing SGD to prevent
+# a bouncing back and forth of accuracy. Tried Nadam, SGD, and adam and adam has
+# turned out to be the most accurate with the options and layers that I'm using
+classifier.compile(loss = 'categorical_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
 
-batch_size = 16
+batch_size = 32
 
 # Fitting the CNN to the images
 train_datagen = ImageDataGenerator(
@@ -91,7 +92,7 @@ training_set = train_datagen.flow_from_directory(
 )
 
 validation_set = test_datagen.flow_from_directory(
-    'keycapdata/test_set',
+    'keycapdata/validation_set',
     target_size = (150, 150),
     batch_size = batch_size,
     # class_mode = 'binary'
@@ -99,10 +100,11 @@ validation_set = test_datagen.flow_from_directory(
 
 classifier.fit_generator(
     training_set,
-    steps_per_epoch = 20, # was 8000, shortening for laptop
-    epochs = 20,
+    steps_per_epoch = 20,
+    epochs = 10,
     validation_data = validation_set,
-    validation_steps = 10 # was 800
+    validation_steps = 10
 )
 
+# save model as .h5 aka .hdf5, Hierarchical Data Format.
 classifier.save('keycapidentifier.h5')
