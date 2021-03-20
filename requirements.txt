@@ -18,7 +18,7 @@ idna==2.8
 ipython==7.4.0
 ipython-genutils==0.2.0
 jedi==0.13.3
-Jinja2==2.10.1
+Jinja2==2.11.3
 jsonpatch==1.10
 jsonpointer==1.9
 Keras==2.2.4
