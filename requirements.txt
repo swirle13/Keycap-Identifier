@@ -28,7 +28,7 @@ language-selector==0.1
 Markdown==3.1
 MarkupSafe==0.23
 mock==2.0.0
-numpy==1.16.2
+numpy==1.22.0
 oauthlib==1.0.3
 parso==0.3.4
 pbr==5.1.3
